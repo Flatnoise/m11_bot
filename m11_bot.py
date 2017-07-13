@@ -57,12 +57,12 @@ def send_welcome(message):
 @bot.message_handler(content_types=["text"])
 def send_keyboard(message):
 	keyboard = types.InlineKeyboardMarkup()
-	button1 = types.InlineKeyboardButton(text = "МОСКВА (МКАД)", callback_data = "from_mkad")
-	button2 = types.InlineKeyboardButton(text = "ШЕРЕМЕТЬЕВО-2", callback_data = "from_svo2")
-	button3 = types.InlineKeyboardButton(text = "ШЕРЕМЕТЬЕВО-1", callback_data = "from_svo1")
-	button4 = types.InlineKeyboardButton(text = "ЗЕЛЕНОГРАД", callback_data = "from_zel")
-	button5 = types.InlineKeyboardButton(text = "БЕТОНКА", callback_data = "from_mmk")
-	button6 = types.InlineKeyboardButton(text = "СОЛНЕЧНОГОРСК", callback_data = "from_sol")
+	button1 = types.InlineKeyboardButton(text = "МКАД", callback_data = "from_mkad")
+	button2 = types.InlineKeyboardButton(text = "ШРМ-2", callback_data = "from_svo2")
+	button3 = types.InlineKeyboardButton(text = "ШРМ-1", callback_data = "from_svo1")
+	button4 = types.InlineKeyboardButton(text = "ЗЕЛ", callback_data = "from_zel")
+	button5 = types.InlineKeyboardButton(text = "БЕТ", callback_data = "from_mmk")
+	button6 = types.InlineKeyboardButton(text = "СОЛН", callback_data = "from_sol")
 	keyboard.add(button1, button2, button3, button4, button5, button6)
 	bot.send_message(message.chat.id, "Где вы сейчас?", reply_markup = keyboard)
 	
