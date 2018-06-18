@@ -109,7 +109,7 @@ def callback_inline(call):
 		msg_text="ТОЧКА ВЪЕЗДА >>>    " + locations[start_pos] + "\n"
 		for row in prices:
 			if row[0] == start_pos:
-				msg_text = msg_text + locations[row[1]] + ':   ' + str(round(row[col] * 0.8)) + '\n'
+				msg_text = msg_text + locations[row[1]] + ':   ' + str(round(row[col])) + '\n'
 		
 		# The message will be shown on the same place where buttons were
 		bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text=msg_text)
