@@ -70,34 +70,6 @@ for table in tables:
 
     prices.append(price_row)
 
-
-
-
-    # Selecting rows
-    # row = table.find_all('td')
-
-    # # Lenght of row in tariff table must be exactly 12
-    # if len(row) == 12:
-    #     price_row = []
-    #     for cell in row:
-    #         if not cell.text.isnumeric():
-    #             # Splitting start - destination string into two
-    #             tmp1 = cell.text.strip()
-    #             if tmp1[-2:] == "**":
-    #                 tmp1 = tmp1[0:-3]    # Delete ** in the end of the string if present
-    #             indx = tmp1.index(' - ')
-    #             tmp2 = tmp1[0:indx].strip()
-    #             tmp3 = tmp1[indx + 3:].strip()
-
-    #             # Write locations into two first elements of the list
-    #             price_row.append(locations[tmp2])
-    #             price_row.append(locations[tmp3])
-
-    #         else:
-    #             # Append a price to the list
-    #             price_row.append(int(cell.text.strip()))
-    #     prices.append(price_row)
-
 # Writing a CSV file with prices
 with open(m11_bot_config.price_file, 'w', newline='') as csvfile:
     price_writer = csv.writer(csvfile)
