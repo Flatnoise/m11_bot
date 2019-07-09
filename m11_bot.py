@@ -15,15 +15,17 @@ from time import strftime
 
 # Dictionary with locations
 locations = {
-    0:"МОСКВА",
-    1:"ШЕРЕМЕТЬЕВО-2",
-    2:"ШЕРЕМЕТЬЕВО-1",
-    3:"ЗЕЛЕНОГРАД",
-    4:"МОСКОВСКОЕ МАЛОЕ КОЛЬЦО (A107)",
-    5:"СОЛНЕЧНОГОРСК (пересечение с М10)",
-    6:"СОЛНЕЧНОГОРСК-3 (67-й км)",
-    7:"КЛИН (89-й км)",
-    8:"ЯМУГА (97-й км)"}
+    0: "МОСКВА",
+    1: "ШЕРЕМЕТЬЕВО-2",
+    2: "ШЕРЕМЕТЬЕВО-1",
+    3: "ЗЕЛЕНОГРАД",
+    4: "МОСКОВСКОЕ МАЛОЕ КОЛЬЦО (A107)",
+    5: "СОЛНЕЧНОГОРСК (пересечение с М10)",
+    6: "СОЛНЕЧНОГОРСК-3 (67-й км)",
+    7: "КЛИН (89-й км)",
+    8: "ЯМУГА (97-й км)",
+    9: "МОКШИНО (124-й км)",
+    10: "ВОСКРЕСЕНСКОЕ (147-й км)"}
 
 # reading prices from CSV
 prices = []
@@ -59,21 +61,23 @@ def send_welcome(message):
 @bot.message_handler(content_types=["text"])
 def send_keyboard(message):
     keyboard = types.InlineKeyboardMarkup()
-    button1 = types.InlineKeyboardButton(text = "МКАД", callback_data = "from_mkad")
-    button2 = types.InlineKeyboardButton(text = "ШРМ-2", callback_data = "from_svo2")
-    button3 = types.InlineKeyboardButton(text = "ШРМ-1", callback_data = "from_svo1")
-    button4 = types.InlineKeyboardButton(text = "ЗЕЛ", callback_data = "from_zel")
-    button5 = types.InlineKeyboardButton(text = "БЕТ", callback_data = "from_mmk")
-    button6 = types.InlineKeyboardButton(text = "СОЛН (M10)", callback_data = "from_sol")
-    button7 = types.InlineKeyboardButton(text = "СОЛН (67 КМ))", callback_data = "from_sol67")
-    button8 = types.InlineKeyboardButton(text = "КЛИН", callback_data = "from_klin")
-#    button9 = types.InlineKeyboardButton(text = "ЯМУГА", callback_data = "from_yamuga")
-    keyboard.add(button1, button2, button3, button4, button5, button6, button7, button8)
-    bot.send_message(message.chat.id, "Где вы сейчас?", reply_markup = keyboard)
+    button1 = types.InlineKeyboardButton(text="МКАД", callback_data="from_mkad")
+    button2 = types.InlineKeyboardButton(text="ШРМ-2", callback_data="from_svo2")
+    button3 = types.InlineKeyboardButton(text="ШРМ-1", callback_data="from_svo1")
+    button4 = types.InlineKeyboardButton(text="ЗЕЛЕНОГРАД", callback_data="from_zel")
+    button5 = types.InlineKeyboardButton(text="БЕТОНКА", callback_data="from_mmk")
+    button6 = types.InlineKeyboardButton(text="СОЛ(M10)", callback_data="from_sol")
+    button7 = types.InlineKeyboardButton(text="СОЛ(67КМ))", callback_data="from_sol67")
+    button8 = types.InlineKeyboardButton(text="КЛИН", callback_data="from_klin")
+#    button9 = types.InlineKeyboardButton(text="ЯМУГА", callback_data="from_yamuga")
+    button10 = types.InlineKeyboardButton(text="МОКШИНО", callback_data="from_mokshino")
+    button11 = types.InlineKeyboardButton(text="ВОСКРЕСЕНСКОЕ", callback_data="from_voskresenskoye")
+    keyboard.add(button1, button2, button3, button4, button5, button6, button7, button8, button10, button11)
+    bot.send_message(message.chat.id, "Где вы сейчас?", reply_markup=keyboard)
 
 
 # Handling queries from buttons
-@bot.callback_query_handler(func=lambda call:True)
+@bot.callback_query_handler(func=lambda call: True)
 def callback_inline(call):
     if call.message:
         # Selecting start position depending on pressed button
@@ -86,27 +90,29 @@ def callback_inline(call):
         if call.data == "from_sol67": start_pos = 6
         if call.data == "from_klin": start_pos = 7
 #        if call.data == "from_yamuga": start_pos = 8
+        if call.data == "from_mokshino": start_pos = 9
+        if call.data == "from_voskresenskoye": start_pos = 10
 
         # Getting current date and time
         weekday = int(strftime("%w"))
         hour = int(strftime("%H"))
 
         # Selecting column from the price table
-        if hour>=1 and hour<6: col = 2              # 01:00 - 06:00 all days
-        if weekday >=1 and weekday <= 4:            # Monday - Thursday
-            if hour>=6 and hour<14: col = 3             # 06:00 - 14:00
-            if hour>=14 or hour<1: col = 4              # 14:00 - 01:00
+        if hour >= 1 and hour < 6: col = 2          # 01:00 - 06:00 all days
+        if weekday >= 1 and weekday <= 4:           # Monday - Thursday
+            if hour >= 6 and hour < 14: col = 3       # 06:00 - 14:00
+            if hour >= 14 or hour < 1: col = 4        # 14:00 - 01:00
         if weekday == 5:                            # Friday
-            if hour>=6 and hour<14: col = 5             # 06:00 - 14:00
-            if hour>=14 or hour<1: col = 6              # 14:00 - 01:00
-        if weekday == 6: col=7                      # Saturday
+            if hour >= 6 and hour < 14: col = 5       # 06:00 - 14:00
+            if hour >= 14 or hour < 1: col = 6        # 14:00 - 01:00
+        if weekday == 6: col = 7                    # Saturday
         if weekday == 0:                            # Sunday
-            if hour>=6 and hour<14: col = 8             # 06:00 - 14:00
-            if hour>=14 or hour<1: col = 9              # 14:00 - 01:00
+            if hour >= 6 and hour < 14: col = 8       # 06:00 - 14:00
+            if hour >= 14 or hour < 1: col = 9        # 14:00 - 01:00
 
 
         # Creating message with prices
-        msg_text="ТОЧКА ВЪЕЗДА >>>    " + locations[start_pos] + "\n"
+        msg_text = "ТОЧКА ВЪЕЗДА >>>    " + locations[start_pos] + "\n"
         for row in prices:
             if row[0] == start_pos:
                 msg_text = msg_text + locations[row[1]] + ':   ' + str(round(row[col])) + '\n'

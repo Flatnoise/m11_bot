@@ -30,7 +30,9 @@ locations = {
     "СОЛНЕЧНОГОРСК (пересечение с М10)": 5,
     "СОЛНЕЧНОГОРСК-3 (67-й км)": 6,
     "КЛИН (89-й км)": 7,
-    "ЯМУГА (97-й км)": 8}
+    "ЯМУГА (97-й км)": 8,
+    "МОКШИНО (124-й км)": 9,
+    "ВОСКРЕСЕНСКОЕ (147-й км)": 10}
 
 # Loading page and feeding it to BeautifulSoup
 page = requests.get(m11_bot_config.price_url, verify=False)
