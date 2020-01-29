@@ -29,7 +29,7 @@ locations = {
 
 # reading prices from CSV
 prices = []
-with open(cfg.price_file, newline='') as csvfile:
+with open(cfg.price_file_szkk_transponder, newline='') as csvfile:
     price_reader = csv.reader(csvfile)
     for row in price_reader:
         tmp_row = []
