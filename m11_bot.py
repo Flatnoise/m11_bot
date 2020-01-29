@@ -67,12 +67,14 @@ def send_keyboard(message):
     button4 = types.InlineKeyboardButton(text="ЗЕЛЕНОГРАД", callback_data="from_zel")
     button5 = types.InlineKeyboardButton(text="БЕТОНКА", callback_data="from_mmk")
     button6 = types.InlineKeyboardButton(text="СОЛ(M10)", callback_data="from_sol")
-    button7 = types.InlineKeyboardButton(text="СОЛ(67КМ))", callback_data="from_sol67")
-    button8 = types.InlineKeyboardButton(text="КЛИН", callback_data="from_klin")
-#    button9 = types.InlineKeyboardButton(text="ЯМУГА", callback_data="from_yamuga")
-    button10 = types.InlineKeyboardButton(text="МОКШИНО", callback_data="from_mokshino")
-    button11 = types.InlineKeyboardButton(text="ВОСКРЕСЕНСКОЕ", callback_data="from_voskresenskoye")
-    keyboard.add(button1, button2, button3, button4, button5, button6, button7, button8, button10, button11)
+    # button7 = types.InlineKeyboardButton(text="СОЛ(67КМ))", callback_data="from_sol67")
+    # button8 = types.InlineKeyboardButton(text="КЛИН", callback_data="from_klin")
+    # button9 = types.InlineKeyboardButton(text="ЯМУГА", callback_data="from_yamuga")
+    # button10 = types.InlineKeyboardButton(text="МОКШИНО", callback_data="from_mokshino")
+    # button11 = types.InlineKeyboardButton(text="ВОСКРЕСЕНСКОЕ", callback_data="from_voskresenskoye")
+#    temporary removed avtodor part of the road - until i write another parcer for it
+#    keyboard.add(button1, button2, button3, button4, button5, button6, button7, button8, button10, button11)
+    keyboard.add(button1, button2, button3, button4, button5, button6)
     bot.send_message(message.chat.id, "Где вы сейчас?", reply_markup=keyboard)
 
 
@@ -87,11 +89,11 @@ def callback_inline(call):
         if call.data == "from_zel": start_pos = 3
         if call.data == "from_mmk": start_pos = 4
         if call.data == "from_sol": start_pos = 5
-        if call.data == "from_sol67": start_pos = 6
-        if call.data == "from_klin": start_pos = 7
-#        if call.data == "from_yamuga": start_pos = 8
-        if call.data == "from_mokshino": start_pos = 9
-        if call.data == "from_voskresenskoye": start_pos = 10
+        # if call.data == "from_sol67": start_pos = 6
+        # if call.data == "from_klin": start_pos = 7
+        # if call.data == "from_yamuga": start_pos = 8
+        # if call.data == "from_mokshino": start_pos = 9
+        # if call.data == "from_voskresenskoye": start_pos = 10
 
         # Getting current date and time
         weekday = int(strftime("%w"))
